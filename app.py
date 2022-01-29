@@ -1,5 +1,7 @@
 from flask import Flask
 import os
+import signal
+import sys
 
 app = Flask(__name__)
 app_host = os.getenv("APP_HOST") or "0.0.0.0"
@@ -24,6 +26,14 @@ def loadiCal():
 @app.route('/')
 def index():
     return loadiCal()
+
+def signal_handler(sig, frame):
+    print('Shutting down.')
+    sys.exit(0)
+
+
+signal.signal(signal.SIGINT, signal_handler)
+
 
 if __name__ == '__main__':
     app.run(host=app_host, port=app_port)
