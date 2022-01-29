@@ -14,19 +14,16 @@ def loadiCal():
         if fileInCache is "":
             f = open("data/file.ics", "r")
             fileInCache = f.read()
-            print("read file")
             return fileInCache
         else:
-            print("cached file")
             return fileInCache
-    except IOError, e:
-        print e
+    except IOError as e:
+        print(e)
 
 
 @app.route('/')
 def index():
     return loadiCal()
 
-
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0')
+    app.run(host=app_host, port=app_port)
